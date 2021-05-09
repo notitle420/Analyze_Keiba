@@ -1,0 +1,5 @@
+# 特定のファイルを無視
+/csv/
+/csvFuture/
+/Vumacsv/
+/VumaMarkcsv/

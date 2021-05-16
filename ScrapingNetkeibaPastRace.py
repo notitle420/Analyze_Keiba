@@ -1,6 +1,7 @@
 import csv
 import requests
 import bs4
+import pandas as pd
 
 RACE_ID = "202005021211"
 CSV_DIR = "./csv/"
@@ -108,6 +109,9 @@ def get_odds_from_text(header_flg, text):
     return info_clean
 
 if __name__ == '__main__':
+  start = 0
+  end = 0
+  for i in range(start,end):
     url = URL_BASE + RACE_ID
     text = get_text_from_page(url)
     header = ["着","枠","番","馬","齢","量","騎","時","差","指","通","上","人気","体重","増減","調教","馬主","オッズ","複勝オッズ"]
@@ -126,12 +130,7 @@ if __name__ == '__main__':
       row.append(tmp)
       row.append(tmp2)
     info_sorted = sorted(info, reverse=False, key=lambda x: x[2])
+    df = pd.DataFrame(info_sorted,columns=header)
 
-    # csvファイル
-    file_path = CSV_DIR + RACE_ID + ".csv"
-
-    with open(file_path, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(header)
-        writer.writerows(info_sorted)
-        writer.writerows(odds)
+    file_path = CSV_DIR + str(i) + "_" + str(n) + ".csv"
+    df.to_csv(file_path)
